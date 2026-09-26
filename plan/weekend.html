@@ -1,0 +1,220 @@
+<title>Закрываю долги</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f3f2f6; --surface:#ffffff; --surface-2:#ecebf1; --line:#dddbe5;
+  --text:#18161f; --muted:#6c6878; --faint:#9894a5;
+  --rus:#d8337a; --rus-bg:#fbe4ee; --him:#6d4fd8; --him-bg:#ebe6fc; --bio:#1f9a5c; --bio-bg:#e0f4e9;
+  --late:#d4462b; --late-bg:#fde8e3; --ok:#1f9a5c; --accent:#ea6a1d;
+  --ff-display:"Unbounded",system-ui,sans-serif; --ff-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif; --ff-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#0f0e12; --surface:#18171d; --surface-2:#211f28; --line:#2c2a35;
+  --text:#ecebf1; --muted:#9a96a8; --faint:#6b6778;
+  --rus:#ff6fa8; --rus-bg:#3a1a29; --him:#a48cff; --him-bg:#261f40; --bio:#4fd18c; --bio-bg:#12301f;
+  --late:#ff7a5c; --late-bg:#3a1a14; --ok:#4fd18c; --accent:#ff8a3d;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f0e12; --surface:#18171d; --surface-2:#211f28; --line:#2c2a35;
+  --text:#ecebf1; --muted:#9a96a8; --faint:#6b6778;
+  --rus:#ff6fa8; --rus-bg:#3a1a29; --him:#a48cff; --him-bg:#261f40; --bio:#4fd18c; --bio-bg:#12301f;
+  --late:#ff7a5c; --late-bg:#3a1a14; --ok:#4fd18c; --accent:#ff8a3d;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:15px/1.45 var(--ff-body);padding-inline:16px;padding-block:24px 48px}
+.wrap{max-width:980px;margin:0 auto;display:grid;gap:28px}
+h1{font:700 clamp(24px,5vw,34px)/1.1 var(--ff-display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h2{font:600 18px/1.2 var(--ff-display);margin:0}
+.lead{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.controls{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;color:var(--muted);font-size:14px}
+.controls label{display:flex;gap:8px;align-items:center}
+select,input[type=text],input[type=time]{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.sum{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:4px}
+.sum .k{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.sum .v{font:600 22px/1.1 var(--ff-mono);font-variant-numeric:tabular-nums}
+.sum .s{font-size:13px;color:var(--muted)}
+.day{display:grid;gap:12px}
+.dayhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 16px;border-bottom:2px solid var(--text);padding-bottom:8px}
+.dayhead .meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--muted);font-size:14px}
+.dayhead .meta b{font-family:var(--ff-mono);color:var(--text);font-weight:500}
+.list{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.row.test{margin-left:28px}
+.row.done{opacity:.45}
+.row.done .title{text-decoration:line-through}
+.time{font:500 14px/1.3 var(--ff-mono);font-variant-numeric:tabular-nums;color:var(--text)}
+.time small{display:block;color:var(--faint);font-size:12px}
+.body{display:grid;gap:6px;min-width:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font:600 11px/1 var(--ff-body);letter-spacing:.05em;text-transform:uppercase;padding:4px 7px;border-radius:5px}
+.chip.РУС{background:var(--rus-bg);color:var(--rus)}
+.chip.ХИМ{background:var(--him-bg);color:var(--him)}
+.chip.БИО{background:var(--bio-bg);color:var(--bio)}
+.kind{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.flag{font-size:12px;padding:2px 7px;border-radius:5px;background:var(--late-bg);color:var(--late);font-weight:600}
+.flag.soon{background:var(--surface-2);color:var(--accent)}
+.title{font-weight:600;font-size:15px}
+.topic{color:var(--muted);font-size:13px}
+.fields{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--muted)}
+.fields input[type=text]{width:74px;font-family:var(--ff-mono);font-size:13px}
+.fields input.link{width:min(260px,100%);font-family:var(--ff-body)}
+.est{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--muted)}
+.est.exact{color:var(--ok)}
+.fields a{color:var(--accent);font-weight:600}
+.dur{font:500 13px var(--ff-mono);color:var(--text)}
+.check{width:22px;height:22px;accent-color:var(--accent);cursor:pointer;margin-top:2px}
+.break{display:flex;gap:12px;align-items:center;color:var(--faint);font-size:13px;padding:2px 14px}
+.break .time{color:var(--faint);width:64px}
+.optional{border-top:1px dashed var(--line);padding-top:12px;display:grid;gap:8px}
+.optional h3{margin:0;font:600 14px var(--ff-body);color:var(--muted)}
+.note{color:var(--muted);font-size:13px;max-width:70ch}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:560px){
+  .row{grid-template-columns:52px 1fr auto;padding:10px 12px;gap:10px}
+  .row.test{margin-left:14px}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Закрываю долги: 26–27 сентября</h1>
+    <p class="lead">Всё видео смотрится на выбранной скорости, тесты и письменные работы идут без ускорения. Длительности пока примерные. Вставь реальное время ролика с NooTube и ссылку, и расписание пересчитается само.</p>
+  </header>
+
+  <div class="controls">
+    <label for="speed">Скорость видео
+      <select id="speed"><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2" selected>2×</option><option value="2.5">2.5×</option></select>
+    </label>
+    <label for="brk">Перерыв между блоками
+      <select id="brk"><option value="0">нет</option><option value="5">5 мин</option><option value="10" selected>10 мин</option><option value="15">15 мин</option></select>
+    </label>
+    <button id="reset" type="button" style="font:inherit;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:4px 10px;cursor:pointer">Сбросить мои правки</button>
+  </div>
+
+  <div class="summary" id="summary"></div>
+  <section class="day" id="day-sat"></section>
+  <section class="day" id="day-sun"></section>
+  <p class="note">«оценка» значит, что время взято примерно по типу занятия: теория около часа, практика и вебинар около двух часов, разбор произведения около 1:40. Как только впишешь своё время, метка станет «точно». Отметки и ссылки сохраняются в этом браузере.</p>
+</div>
+
+<script>
+// kind: video (ускоряется) | test | written | exam (без ускорения)
+const TASKS = [
+  // ── Суббота, 26.09 ──
+  {id:"h-p12",  day:"sat", subj:"ХИМ", kind:"video", type:"Практика", title:"Практика №12", topic:"Основы ОВР. Электронный баланс", len:"2:00", flag:"долг с 25.09"},
+  {id:"h-p12t", day:"sat", subj:"ХИМ", kind:"test",  type:"Тест", title:"Тест: Практика №12", topic:"Основы ОВР. Электронный баланс", len:"0:20", flag:"сдать до 26.09, 23:59", urgent:true, attach:true},
+  {id:"r-a6",   day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №6", topic:"«Судьба человека»", len:"1:40", exact:true, flag:"долг с 20.09"},
+  {id:"r-a6t",  day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №6", topic:"«Судьба человека»", len:"0:15", flag:"просрочен с 08.09", attach:true},
+  {id:"r-a7",   day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №7", topic:"«Портрет Дориана Грея»", len:"1:40", flag:"долг с 20.09"},
+  {id:"r-a7t",  day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №7", topic:"«Портрет Дориана Грея»", len:"0:15", flag:"просрочен с 13.09", attach:true},
+  {id:"r-a8",   day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №8", topic:"«Пиковая дама»", len:"1:30", flag:"долг с 20.09"},
+  {id:"r-a8t",  day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №8", topic:"«Пиковая дама»", len:"0:15", flag:"просрочен с 15.09", attach:true},
+  {id:"r-t12",  day:"sat", subj:"РУС", kind:"video", type:"Теория", title:"Теория №12", topic:"4 задание", len:"1:00", flag:"долг с 23.09"},
+  // ── Воскресенье, 27.09: сначала долги ──
+  {id:"h-p11",  day:"sun", subj:"ХИМ", kind:"video", type:"Практика", title:"Практика №11", topic:"Формулы в химии. Расчёты по уравнению реакции", len:"2:00", flag:"долг с 23.09"},
+  {id:"b-p112", day:"sun", subj:"БИО", kind:"video", type:"Практика", title:"Практика №11.2", topic:"Решение задач на биосинтез белка №2", len:"2:00", flag:"долг с 24.09"},
+  {id:"r-t13",  day:"sun", subj:"РУС", kind:"video", type:"Теория", title:"Теория №13", topic:"5 задание", len:"1:00", flag:"долг с 25.09"},
+  {id:"r-t13t", day:"sun", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Теория №13", topic:"5 задание", len:"0:15", flag:"до 28.09", soon:true, attach:true},
+  {id:"r-p7",   day:"sun", subj:"РУС", kind:"video", type:"Практика", title:"Практика №7", topic:"К1–К3 на максимум. Разбор работ, веб с экспертом ЕГЭ", len:"2:00", flag:"с 26.09"},
+  // ── Воскресенье: план дня ──
+  {id:"h-t13",  day:"sun", subj:"ХИМ", kind:"video", type:"Теория", title:"Теория №13", topic:"Химические свойства оксидов: основных и кислотных", len:"1:00"},
+  {id:"h-t14",  day:"sun", subj:"ХИМ", kind:"video", type:"Теория", title:"Теория №14", topic:"Химические свойства оснований", len:"1:00"},
+  {id:"h-club", day:"sun", subj:"ХИМ", kind:"video", type:"Вебинар", title:"Клуб укротителей задач №3", topic:"Задача 26. Молярные концентрации", len:"1:30"},
+  {id:"r-t14",  day:"sun", subj:"РУС", kind:"video", type:"Теория", title:"Теория №14", topic:"6 задание", len:"1:00"},
+  {id:"r-t14t", day:"sun", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Теория №14", topic:"6 задание", len:"0:15", flag:"до 30.09", soon:true, attach:true},
+  // ── Не долги: сроки позже, делать по силам ──
+  {id:"b-mock", day:"opt", subj:"БИО", kind:"exam",    type:"Пробник", title:"Пробник №3", topic:"Биология", len:"3:00", flag:"до 29.09", soon:true},
+  {id:"h-d13",  day:"opt", subj:"ХИМ", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Теория №13", topic:"Химические свойства оксидов", len:"0:30", flag:"до 03.10", soon:true},
+  {id:"h-d14",  day:"opt", subj:"ХИМ", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Теория №14", topic:"Химические свойства оснований", len:"0:30", flag:"до 03.10", soon:true},
+  {id:"r-d7",   day:"opt", subj:"РУС", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Практика №7", topic:"К1–К3 на максимум", len:"0:40", flag:"до 03.10", soon:true},
+];
+const DAYS = {
+  sat:{name:"Суббота, 26 сентября", note:"сегодня вечером", start:"19:30"},
+  sun:{name:"Воскресенье, 27 сентября", note:"сначала долги, потом план дня", start:"10:00"},
+};
+const KEY="noo-weekend-v1";
+let S={};
+try{S=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){S={}}
+S.t=S.t||{}; S.start=S.start||{};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+
+const parse=s=>{const m=String(s||"").trim().match(/^(\d{1,2})(?::(\d{1,2}))?(?::(\d{1,2}))?$/);if(!m)return null;
+  // h:mm:ss, h:mm или просто минуты
+  if(m[3]!==undefined)return +m[1]*60+ +m[2]+ +m[3]/60;
+  if(m[2]!==undefined)return +m[1]*60+ +m[2];
+  return +m[1];};
+const hm=min=>{min=Math.round(min);const h=Math.floor(min/60),m=min%60;return h?`${h} ч ${String(m).padStart(2,"0")} мин`:`${m} мин`;};
+const short=min=>{min=Math.round(min);return min>=60?`${Math.floor(min/60)}:${String(min%60).padStart(2,"0")}`:`${min} мин`;};
+const clock=min=>{min=Math.round(min)%(24*60);return `${String(Math.floor(min/60)).padStart(2,"0")}:${String(min%60).padStart(2,"0")}`;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const speedEl=document.getElementById("speed"), brkEl=document.getElementById("brk");
+if(S.speed)speedEl.value=S.speed; if(S.brk!==undefined)brkEl.value=S.brk;
+
+function st(t){const o=S.t[t.id]||{};const raw=o.len??t.len;const real=parse(raw)??parse(t.len);
+  const sp=+speedEl.value;const eff=t.kind==="video"?real/sp:real;
+  return {raw,real,eff,exact:o.len!==undefined?true:!!t.exact,link:o.link||"",done:!!o.done};}
+
+function rowHTML(t,startMin){const s=st(t);const vid=t.kind==="video";
+  return `<div class="row${t.attach?" test":""}${s.done?" done":""}">
+    <div class="time">${startMin==null?"—":clock(startMin)}<small>${short(s.eff)}</small></div>
+    <div class="body">
+      <div class="tags"><span class="chip ${t.subj}">${t.subj}</span><span class="kind">${esc(t.type)}</span>${t.flag?`<span class="flag${t.soon?" soon":""}">${esc(t.flag)}</span>`:""}</div>
+      <div class="title">${esc(t.title)}</div>
+      <div class="topic">${esc(t.topic)}</div>
+      <div class="fields">
+        <label for="len-${t.id}">${vid?"Ролик":"Время"} <input type="text" id="len-${t.id}" data-id="${t.id}" data-f="len" value="${esc(s.raw)}" inputmode="numeric" aria-label="Длительность, ч:мм"></label>
+        <span class="est${s.exact?" exact":""}">${s.exact?"точно":"оценка"}</span>
+        ${vid?`<span>на ${speedEl.value}× → <span class="dur">${hm(s.eff)}</span></span>
+        <label for="link-${t.id}" style="display:flex;gap:6px;align-items:center">NooTube <input type="text" class="link" id="link-${t.id}" data-id="${t.id}" data-f="link" value="${esc(s.link)}" placeholder="вставь ссылку"></label>
+        ${/^https?:\/\//.test(s.link)?`<a href="${esc(s.link)}" target="_blank" rel="noopener">открыть ↗</a>`:""}`:""}
+      </div>
+    </div>
+    <input type="checkbox" class="check" id="done-${t.id}" data-id="${t.id}" data-f="done" ${s.done?"checked":""} aria-label="Готово: ${esc(t.title)}">
+  </div>`;}
+
+function render(){
+  const brk=+brkEl.value; const tot={};
+  for(const d of Object.keys(DAYS)){
+    const el=document.getElementById("day-"+d), list=TASKS.filter(t=>t.day===d);
+    const startStr=S.start[d]||DAYS[d].start; let cur=parse(startStr.replace(/^(\d+):(\d+)$/,"$1:$2"));
+    let html="", work=0, left=0;
+    list.forEach((t,i)=>{const s=st(t);
+      html+=rowHTML(t,cur); cur+=s.eff; work+=s.eff; if(!s.done)left+=s.eff;
+      const next=list[i+1];
+      if(next&&!next.attach&&brk){html+=`<div class="break"><span class="time">${clock(cur)}</span>перерыв ${brk} мин</div>`;cur+=brk;}
+    });
+    tot[d]={work,left,end:cur};
+    let opt="";
+    if(d==="sun"){const o=TASKS.filter(t=>t.day==="opt");
+      opt=`<div class="optional"><h3>Если останутся силы. Это не долги, сроки позже</h3><div class="list">${o.map(t=>rowHTML(t,null)).join("")}</div></div>`;}
+    el.innerHTML=`<div class="dayhead"><h2>${DAYS[d].name}</h2>
+      <div class="meta"><label for="start-${d}">начало <input type="time" id="start-${d}" data-day="${d}" value="${esc(startStr)}"></label>
+      <span>работы <b>${hm(work)}</b></span><span>конец около <b>${clock(cur)}</b></span></div></div>
+      <div class="list">${html}</div>${opt}`;
+  }
+  const all=TASKS.filter(t=>t.day!=="opt"); const doneN=all.filter(t=>st(t).done).length;
+  document.getElementById("summary").innerHTML=`
+    <div class="sum"><span class="k">Суббота</span><span class="v">${hm(tot.sat.work)}</span><span class="s">${DAYS.sat.note}, до ${clock(tot.sat.end)}</span></div>
+    <div class="sum"><span class="k">Воскресенье</span><span class="v">${hm(tot.sun.work)}</span><span class="s">${DAYS.sun.note}</span></div>
+    <div class="sum"><span class="k">Осталось</span><span class="v">${hm(tot.sat.left+tot.sun.left)}</span><span class="s">сделано ${doneN} из ${all.length}</span></div>`;
+}
+document.addEventListener("change",e=>{const el=e.target;
+  if(el.dataset.day){S.start[el.dataset.day]=el.value;save();render();return;}
+  const id=el.dataset.id,f=el.dataset.f; if(!id)return;
+  S.t[id]=S.t[id]||{};
+  if(f==="done")S.t[id].done=el.checked;
+  else if(f==="len"){if(parse(el.value)==null){el.value=st(TASKS.find(t=>t.id===id)).raw;return;}S.t[id].len=el.value.trim();}
+  else if(f==="link")S.t[id].link=el.value.trim();
+  save();render();
+  const again=document.getElementById(`${f}-${id}`); if(again&&f!=="done")again.focus();
+});
+speedEl.addEventListener("change",()=>{S.speed=speedEl.value;save();render();});
+brkEl.addEventListener("change",()=>{S.brk=brkEl.value;save();render();});
+document.getElementById("reset").addEventListener("click",()=>{S={t:{},start:{}};save();speedEl.value="2";brkEl.value="10";render();});
+render();
+</script>
