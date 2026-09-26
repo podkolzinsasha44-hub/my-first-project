@@ -1,0 +1,450 @@
+<title>ЕГЭ-русский: 4 и 9–15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
+<style>
+:root{
+  --paper:#F6F8FC; --card:#FFFFFF; --ink:#1B2233; --muted:#5A6378; --line:#D5DCEA;
+  --blue:#1F4FA8; --blue-soft:#E4ECFA; --red:#C4332A; --red-soft:#FBE7E5; --green:#1E7A4C; --green-soft:#E1F3E9;
+  --serif:"PT Serif",Georgia,"Times New Roman",serif; --sans:"PT Sans","Segoe UI",Roboto,Arial,sans-serif; --mono:"PT Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11151F; --card:#181E2B; --ink:#E6EAF3; --muted:#9AA3B8; --line:#2C3547;
+    --blue:#8DB0F5; --blue-soft:#1D2A45; --red:#F0877E; --red-soft:#3A1F1F; --green:#7ED3A5; --green-soft:#16302A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11151F; --card:#181E2B; --ink:#E6EAF3; --muted:#9AA3B8; --line:#2C3547;
+  --blue:#8DB0F5; --blue-soft:#1D2A45; --red:#F0877E; --red-soft:#3A1F1F; --green:#7ED3A5; --green-soft:#16302A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 var(--sans);padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:780px;margin:0 auto}
+h1,h2,h3{font-family:var(--serif);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,6vw,40px)}
+h2{font-size:26px}
+h3{font-size:18px;margin-top:4px}
+p{margin:0}
+a{color:var(--blue)}
+.acc{color:var(--red);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+header.top{padding-block:32px 20px;display:grid;gap:12px}
+.eyebrow{font:13px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:18px;max-width:62ch}
+
+/* бланк-style answer cells */
+.cells{display:inline-flex;gap:0}
+.cells span{display:inline-grid;place-items:center;width:30px;height:36px;border:1.5px solid var(--blue);border-left-width:0;font:700 20px var(--mono);color:var(--blue);background:var(--card)}
+.cells span:first-child{border-left-width:1.5px}
+
+nav.jump{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding-block:10px;display:flex;flex-wrap:wrap;gap:6px}
+nav.jump a{font:14px var(--mono);text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--card);padding:5px 10px;border-radius:4px}
+nav.jump a:hover,nav.jump a:focus-visible{border-color:var(--blue);color:var(--blue);outline:none}
+
+section{padding-block:36px 8px;display:grid;gap:16px;scroll-margin-top:60px}
+.head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.what{color:var(--muted)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:grid;gap:10px}
+.rule{border-left:3px solid var(--blue);padding-left:12px;display:grid;gap:4px}
+.trap{background:var(--red-soft);border-radius:6px;padding:12px 14px}
+.trap b:first-child{color:var(--red)}
+ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.ex{font-style:italic}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{font:12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400}
+
+/* plan */
+.plan{display:grid;gap:0;border:1px solid var(--line);border-radius:6px;background:var(--card);overflow:hidden}
+.plan label{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:start;padding:10px 14px;border-bottom:1px solid var(--line);cursor:pointer}
+.plan label:last-child{border-bottom:0}
+.plan input{margin-top:4px;width:18px;height:18px;accent-color:var(--blue)}
+.plan .t{font:14px var(--mono);color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
+.plan input:checked ~ span{text-decoration:line-through;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.stat .n{font:700 26px var(--serif);color:var(--blue)}
+.stat .l{color:var(--muted);font-size:14px}
+
+/* words */
+.words{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:17px}
+.words span{white-space:nowrap}
+details.q{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+details.q summary{cursor:pointer;font-weight:700}
+details.q ol{margin:8px 0 0;padding-left:22px;display:grid;gap:6px}
+details.q .ans{color:var(--green);font-weight:700}
+
+/* trainer */
+.trainer{background:var(--card);border:2px solid var(--blue);border-radius:8px;padding:18px;display:grid;gap:14px}
+.trainer .prog{font:14px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts button,.btn{font:20px var(--sans);padding:14px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer}
+.opts button:hover,.opts button:focus-visible{border-color:var(--blue);outline:none}
+.opts button.ok{border-color:var(--green);background:var(--green-soft)}
+.opts button.bad{border-color:var(--red);background:var(--red-soft)}
+.btn{font-size:16px;padding:10px 16px;background:var(--blue);color:var(--card);border-color:var(--blue)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.fb{min-height:1.5em;font-weight:700}
+.fb.ok{color:var(--green)} .fb.bad{color:var(--red)}
+@media (max-width:420px){.opts{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+footer{margin-top:40px;color:var(--muted);font-size:14px;display:grid;gap:6px}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Русский язык · ЕГЭ · часть 1</div>
+  <h1>Задания 4 и 9–15 за одно воскресенье</h1>
+  <p class="lead">Восемь заданий, каждое по 1 первичному баллу. Правил тут немного, и почти всё решается алгоритмом. Зубрить наизусть придётся только ударения (задание 4).</p>
+  <div class="stats">
+    <div class="stat"><div class="n">≈ 7–8 ч</div><div class="l">чистой работы, чтобы уверенно решать все 8 заданий</div></div>
+    <div class="stat"><div class="n">≈ 4–5 ч</div><div class="l">абсолютный минимум, если часть правил уже знаешь</div></div>
+    <div class="stat"><div class="n">~12 страниц</div><div class="l">весь материал в сжатом виде, то есть эта страница</div></div>
+  </div>
+</header>
+
+<nav class="jump" aria-label="Разделы">
+  <a href="#plan">План</a><a href="#t4">4</a><a href="#t9">9</a><a href="#t10">10</a><a href="#t11">11</a><a href="#t12">12</a><a href="#t13">13</a><a href="#t14">14</a><a href="#t15">15</a><a href="#train">Тренажёр</a>
+</nav>
+
+<!-- ПЛАН -->
+<section id="plan">
+  <h2>План на воскресенье</h2>
+  <p class="what">Каждый блок устроен одинаково: прочитать правило, решить 10–15 заданий этого номера на «Решу ЕГЭ», разобрать ошибки. Между блоками делай перерыв 10 минут. Галочки сохраняются в этом браузере.</p>
+  <div class="plan" id="planList">
+    <label><input type="checkbox" id="p1"><span><b>Задание 4, часть 1.</b> Прочитай вслух весь список ударений ниже, затем пройди тренажёр 2 раза.</span><span class="t">60 мин</span></label>
+    <label><input type="checkbox" id="p2"><span><b>Задание 12.</b> Спряжение глаголов и суффиксы причастий. Самое «алгоритмичное», поэтому идёт первым.</span><span class="t">60 мин</span></label>
+    <label><input type="checkbox" id="p3"><span><b>Задание 15.</b> Н и НН.</span><span class="t">60 мин</span></label>
+    <label><input type="checkbox" id="p4"><span><b>Задание 9.</b> Корни, чередования.</span><span class="t">45 мин</span></label>
+    <label><input type="checkbox" id="p5"><span><b>Задание 10.</b> Приставки, Ы/И, Ъ.</span><span class="t">40 мин</span></label>
+    <label><input type="checkbox" id="p6"><span><b>Задание 11.</b> Суффиксы.</span><span class="t">40 мин</span></label>
+    <label><input type="checkbox" id="p7"><span><b>Задание 13.</b> НЕ с разными частями речи.</span><span class="t">40 мин</span></label>
+    <label><input type="checkbox" id="p8"><span><b>Задание 14.</b> Слитно, раздельно, через дефис.</span><span class="t">50 мин</span></label>
+    <label><input type="checkbox" id="p9"><span><b>Задание 4, повтор.</b> Тренажёр ещё раз, выписать слова, на которых ошибся.</span><span class="t">20 мин</span></label>
+    <label><input type="checkbox" id="p10"><span><b>Контроль.</b> Реши задания 4, 9–15 из двух полных вариантов подряд, как на экзамене.</span><span class="t">30 мин</span></label>
+  </div>
+  <p class="what">Итого около 7 ч 25 мин плюс перерывы, то есть с 10:00 до 19:00 с обедом. Утром перед тестом ещё 15 минут на тренажёр ударений: они забываются быстрее всего.</p>
+</section>
+
+<!-- 4 -->
+<section id="t4">
+  <div class="head"><span class="cells"><span>0</span><span>4</span></span><h2>Ударения</h2></div>
+  <p class="what">Формат: 5 слов, в некоторых выделена ударная буква. Нужно выбрать номера, где выделено <b>верно</b>. Все слова берутся из орфоэпического словника ФИПИ, поэтому учить надо именно его. Ниже его самая частая часть.</p>
+  <div class="trap"><b>Как учить.</b> Читай вслух, громко и с преувеличенным ударением. Глаголы прошедшего времени запоминай «пачкой»: у большинства в женском роде ударение уходит на окончание (брал<b class="acc">а</b>, взял<b class="acc">а</b>, начал<b class="acc">а</b>). Исключения, где ударение остаётся на основе: кл<b class="acc">а</b>ла, кр<b class="acc">а</b>лась.</div>
+  <div class="box"><h3>Существительные</h3><div class="words" data-words="аэропОрты бАнты бОроду бухгАлтеров вероисповЕдание водопровОд газопровОд граждАнство дефИс дешевИзна диспансЕр договорЁнность докумЕнт досУг жалюзИ знАчимость Иксы Искра Иконопись каталОг квартАл киломЕтр кОнусы корЫсть крАны кремЕнь лЕкторы мЕстностей мусоропровОд намЕрение нарОст нЕдруг недУг некролОг ненАвисть нефтепровОд новостЕй нОгтя обеспЕчение Отрочество партЕр портфЕль пОручни придАное призЫв свЁкла сирОты созЫв срЕдства стАтуя столЯр тамОжня тОрты тУфля ходАтайство христианИн цемЕнт цЕпочка шАрфы шофЁр щавЕль экспЕрт"></div></div>
+  <div class="box"><h3>Прилагательные</h3><div class="words" data-words="двоЮродный кУхонный мозаИчный оптОвый прозорлИвый слИвовый красИвее красИвейший ловкА"></div></div>
+  <div class="box"><h3>Глаголы</h3><div class="words" data-words="бралА бралАсь взялА взялАсь влилАсь ворвалАсь воспринЯть воссоздалА вручИт гналА гналАсь добралА добралАсь дождалАсь дозвонИтся дозИровать ждалА жилОсь закУпорить зАнял занялА зАняли заперлА звалА звонИт звонИм исчЕрпать кАшлянуть клАла клЕить крАлась кровоточИть лгалА лилА лилАсь навралА наделИт надорвалАсь назвалАсь накренИтся налилА нарвалА нАчал началА нАчали обзвонИт облегчИть облилАсь обнялАсь обогналА ободралА ободрИть опОшлить освЕдомиться отбылА отдалА откУпорить отозвалА перезвонИт плодоносИть пломбировАть повторИт позвалА позвонИт полилА положИл понялА послалА прИбыл прибылА прИнял принялА рвалА сверлИт снялА совралА создалА сорвалА сорИт убралА углубИть укрепИт чЕрпать щемИт щЁлкать"></div></div>
+  <div class="box"><h3>Причастия и деепричастия</h3><div class="words" data-words="балОванный избалОванный включЁн включЁнный довезЁнный зАгнутый занятА зАпертый заселенА кормЯщий кровоточАщий нажИвший налИвший нанЯвшийся начАвший нАчатый низведЁн облегчЁн ободренА отключЁнный повторЁнный поделЁнный понЯвший прИнятый приручЁнный прожИвший снятА сОгнутый углублЁнный балУясь закУпорив начАв отдАв поднЯв понЯв прибЫв создАв"></div></div>
+  <div class="box"><h3>Наречия</h3><div class="words" data-words="вОвремя дОверху донЕльзя дОнизу дОсуха зАсветло зАтемно мастерскИ надОлго ненадОлго"></div></div>
+  <p class="what">Полный список (около 280 слов) есть в <a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener">демоверсии ФИПИ</a>, в приложении к спецификации. Выше около 190 слов, которые попадаются чаще всего.</p>
+</section>
+
+<!-- 9 -->
+<section id="t9">
+  <div class="head"><span class="cells"><span>0</span><span>9</span></span><h2>Корни</h2></div>
+  <p class="what">Ряды слов с пропуском в корне. Три типа: проверяемая безударная, непроверяемая (словарная) и чередующаяся гласная. Сначала определи тип, потом применяй правило.</p>
+  <div class="box">
+    <h3>Чередования: 4 группы на всё</h3>
+    <div class="rule"><b>1. Зависит от суффикса -а- после корня → пишем И / А</b>
+      <span>бер/бир, пер/пир, дер/дир, тер/тир, мер/мир, жег/жиг, стел/стил, блест/блист, чет/чит: <span class="ex">выбирать, но выберу; блистать, но блестеть</span>. Исключения: сочетать, сочетание, чета.</span>
+      <span>кас/кос: <span class="ex">касаться</span> (есть -а-), но <span class="ex">коснуться</span>.</span>
+      <span>им/я: <span class="ex">понимать, но понять</span>.</span></div>
+    <div class="rule"><b>2. Зависит от последней согласной корня</b>
+      <span>лаг/лож: перед Г пишем А, перед Ж пишем О: <span class="ex">предлагать, предложить</span>. Исключение: полог.</span>
+      <span>раст/ращ/рос: перед СТ и Щ пишем А, иначе О: <span class="ex">растение, выращенный, выросли</span>. Исключения: росток, ростовщик, Ростов, Ростислав, отрасль, подросток.</span>
+      <span>скак/скоч: перед К пишем А, перед Ч пишем О: <span class="ex">скакать, выскочка</span>. Исключения: скачок, скачу.</span></div>
+    <div class="rule"><b>3. Зависит от ударения (без ударения)</b>
+      <span>гар/гор → О: <span class="ex">загорать</span>. Исключения: выгарки, изгарь, пригарь.</span>
+      <span>зар/зор → А: <span class="ex">озарение</span>. Исключения: зоревать, зорянка.</span>
+      <span>клан/клон → О: <span class="ex">наклониться</span>. твар/твор → О: <span class="ex">творение</span>, исключение: утварь.</span>
+      <span>плав/плов/плыв: всегда плав, кроме <span class="ex">пловец, пловчиха, плывуны</span>.</span></div>
+    <div class="rule"><b>4. Зависит от значения</b>
+      <span>равн (одинаковый): <span class="ex">уравнение, сравнить</span>. ровн (гладкий, прямой): <span class="ex">выровнять, заровнять</span>. Исключения: равнина, ровесник, уровень, поровну.</span>
+      <span>мак (погружать): <span class="ex">обмакнуть</span>. мок (пропускать жидкость): <span class="ex">промокнуть</span>.</span></div>
+  </div>
+  <div class="trap"><b>Ловушки.</b> Корень с чередованием нельзя проверять ударением: <span class="ex">загорать</span> не проверяется словом «гОры». Глагол не проверяется формой на -ывать/-ивать: <span class="ex">опоздать</span> проверяем словом «пОздно», а не «опАздывать». Не путай омонимы: <span class="ex">полоскать бельё</span> (О), но <span class="ex">поласкать котёнка</span> (А).</div>
+  <div class="box"><h3>Частые словарные слова</h3><p class="words"><span>интеллигенция</span> <span>привилегия</span> <span>дилетант</span> <span>эпатаж</span> <span>апелляция</span> <span>абориген</span> <span>винегрет</span> <span>дезертир</span> <span>иждивенец</span> <span>инцидент</span> <span>каламбур</span> <span>оптимизм</span> <span>палисадник</span> <span>сентиментальный</span> <span>феерический</span> <span>эксперимент</span> <span>аккомпанемент</span> <span>объединение</span> <span>гардероб</span> <span>гербарий</span></p></div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>з..горелый → <span class="ans">О</span> (гар/гор без ударения)</li>
+    <li>р..сток, р..стение → <span class="ans">О, А</span> (росток — исключение)</li>
+    <li>выт..рать → <span class="ans">И</span> (есть суффикс -а-)</li>
+    <li>ур..вень → <span class="ans">О</span> (исключение)</li>
+    <li>опл..тить (счёт) → <span class="ans">А</span> (плАта; это проверяемый корень, не чередование)</li>
+  </ol></details>
+</section>
+
+<!-- 10 -->
+<section id="t10">
+  <div class="head"><span class="cells"><span>1</span><span>0</span></span><h2>Приставки</h2></div>
+  <div class="box">
+    <div class="rule"><b>Неизменяемые:</b> в-, на-, за-, до-, про-, от-, об-, над-, под-, пред-, с-. Пишутся всегда одинаково: <span class="ex">сделать, сбить, отдать</span>. Приставки «з-» не бывает.</div>
+    <div class="rule"><b>З / С на конце:</b> без-/бес-, воз-/вос-, из-/ис-, раз-/рас-, низ-/нис-, вз-/вс-, через-/черес-. Перед звонкой согласной и гласной пишем З, перед глухой пишем С: <span class="ex">бездомный, безвкусный, бесполезный, расписать</span>.</div>
+    <div class="rule"><b>раз- / роз-:</b> под ударением пишем как слышим, без ударения пишем А: <span class="ex">рОзыск, но разыскать; рОспись, но расписАние</span>.</div>
+    <div class="rule"><b>ПРЕ- / ПРИ-</b>
+      <span>ПРИ-: приближение (<span class="ex">прибежать</span>), присоединение (<span class="ex">пришить</span>), неполнота действия (<span class="ex">приоткрыть</span>), близость (<span class="ex">пришкольный</span>), действие в своих интересах (<span class="ex">припрятать</span>).</span>
+      <span>ПРЕ-: значение «очень» (<span class="ex">премилый</span>) или «пере-» (<span class="ex">преградить, преступить</span>).</span></div>
+  </div>
+  <div class="box tbl">
+    <h3>Пары, которые путают</h3>
+    <table><thead><tr><th>ПРЕ-</th><th>ПРИ-</th></tr></thead><tbody>
+      <tr><td>пребывать (находиться)</td><td>прибывать (приезжать)</td></tr>
+      <tr><td>предать (изменить)</td><td>придать (добавить)</td></tr>
+      <tr><td>претворить (воплотить)</td><td>притворить (прикрыть)</td></tr>
+      <tr><td>преемник (продолжатель)</td><td>приёмник (радио)</td></tr>
+      <tr><td>преходящий (временный)</td><td>приходящий (который приходит)</td></tr>
+      <tr><td>презирать (не уважать)</td><td>призирать (заботиться)</td></tr>
+      <tr><td>пределы (граница)</td><td>приделы (пристройки)</td></tr>
+    </tbody></table>
+    <p class="what">Словарные: презентация, президент, прелюдия, преимущество, пренебрегать, препарат, препятствие, претендент, прерогатива, привилегия, приоритет, примитив, притязание, прихоть, приверженец.</p>
+  </div>
+  <div class="box">
+    <div class="rule"><b>Ы / И после приставки:</b> после русской приставки на согласную И меняется на Ы: <span class="ex">предыстория, безынтересный, розыгрыш</span>. Не меняется после меж- и сверх- (<span class="ex">межинститутский, сверхинтересный</span>), после иноязычных приставок (<span class="ex">контригра, постиндустриальный, дезинформация</span>) и в слове <span class="ex">взимать</span>.</div>
+    <div class="rule"><b>Ъ:</b> после приставки на согласную перед е, ё, ю, я: <span class="ex">подъезд, объявить, сверхъестественный, адъютант, инъекция</span>. Ещё после двух-, трёх-, четырёх-: <span class="ex">двухъярусный</span>. Перед другими гласными Ъ не пишется: <span class="ex">безоблачный</span>.</div>
+  </div>
+  <div class="trap"><b>Ловушка.</b> В одном ряду бывает «приставка + Ъ» и «корень + Ь» (<span class="ex">компьютер, вьюга</span>). В задании 10 все такие буквы считаются.</div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>пр..бывать в Москве (находиться) → <span class="ans">Е</span></li>
+    <li>бе..вкусный → <span class="ans">З</span> (в — звонкая)</li>
+    <li>раз..грать → <span class="ans">Ы</span></li>
+    <li>сверх..нтересный → <span class="ans">И</span></li>
+    <li>пр..открыть → <span class="ans">И</span> (неполнота)</li>
+  </ol></details>
+</section>
+
+<!-- 11 -->
+<section id="t11">
+  <div class="head"><span class="cells"><span>1</span><span>1</span></span><h2>Суффиксы</h2></div>
+  <div class="box"><h3>Существительные</h3>
+    <div class="rule"><b>-ЕК / -ИК:</b> если при склонении гласная выпадает, пишем ЕК: <span class="ex">замочек (замочка)</span>. Если нет, пишем ИК: <span class="ex">ключик (ключика)</span>.</div>
+    <div class="rule"><b>-ЧИК / -ЩИК:</b> после д, т, з, с, ж пишем ЧИК: <span class="ex">переводчик, перебежчик</span>. В остальных случаях ЩИК: <span class="ex">каменщик</span>.</div>
+    <div class="rule"><b>-ЕЦ / -ИЦ:</b> м. р. ЕЦ (<span class="ex">молодец</span>), ж. р. ИЦ (<span class="ex">красавица</span>). В среднем роде: под ударением ЕЦ (<span class="ex">письмецО</span>), без ударения ИЦ (<span class="ex">плАтьице</span>).</div>
+    <div class="rule"><b>-ИЧК- / -ЕЧК-:</b> ИЧК только от слов на -иц(а): <span class="ex">лестница → лестничка</span>. Иначе ЕЧК: <span class="ex">Танечка, семечко</span>.</div>
+    <div class="rule"><b>-ИНК- / -ЕНК-:</b> ИНК от слов на -ин(а): <span class="ex">соломина → соломинка</span>. ЕНК в остальных случаях: <span class="ex">вишня → вишенка, француженка</span>.</div>
+    <div class="rule"><b>-ЕНЬК- / -ОНЬК-:</b> ЕНЬК после мягких и шипящих: <span class="ex">Машенька, ноченька</span>. ОНЬК после твёрдых: <span class="ex">лисонька, берёзонька</span>.</div>
+  </div>
+  <div class="box"><h3>Прилагательные</h3>
+    <div class="rule"><b>-ИВ- / -ЕВ-:</b> под ударением ИВ (<span class="ex">красИвый</span>), без ударения ЕВ (<span class="ex">боевой</span>). Исключения: милостивый, юродивый.</div>
+    <div class="rule"><b>-ЧИВ-, -ЛИВ-:</b> всегда И: <span class="ex">заботливый, доверчивый</span>.</div>
+    <div class="rule"><b>-ОВ- / -ЕВ- после шипящих и Ц:</b> под ударением О (<span class="ex">ежовый</span>), без ударения Е (<span class="ex">грушевый</span>).</div>
+    <div class="rule"><b>-К- / -СК-:</b> к, ч, ц в конце основы + К: <span class="ex">немецкий, рыбацкий, ткацкий</span>. Иначе -СК-: <span class="ex">французский, морской</span>.</div>
+  </div>
+  <div class="box"><h3>Глаголы и наречия</h3>
+    <div class="rule"><b>-ОВА-/-ЕВА- или -ЫВА-/-ИВА-:</b> поставь в 1 лицо. Если «-ую/-юю», пишем ОВА/ЕВА: <span class="ex">заведовать (заведую), горевать (горюю)</span>. Если «-ываю/-иваю», пишем ЫВА/ИВА: <span class="ex">разведывать (разведываю)</span>.</div>
+    <div class="rule"><b>Гласная перед -л- в прошедшем времени:</b> та же, что перед -ть: <span class="ex">сеять → сеял, надеяться → надеялся, обидеть → обидел</span>.</div>
+    <div class="rule"><b>Наречия на -О / -А:</b> с приставками из-, до-, с- на конце А: <span class="ex">издалека, досуха, сначала</span>. С приставками в-, на-, за- на конце О: <span class="ex">вправо, налево, засветло</span>.</div>
+  </div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>замоч..к (дверной) → <span class="ans">Е</span> (замочка)</li>
+    <li>перебеж..ик → <span class="ans">Ч</span></li>
+    <li>завед..вать → <span class="ans">О</span> (заведую)</li>
+    <li>наде..лся → <span class="ans">Я</span> (надеяться)</li>
+    <li>милост..вый → <span class="ans">И</span> (исключение)</li>
+  </ol></details>
+</section>
+
+<!-- 12 -->
+<section id="t12">
+  <div class="head"><span class="cells"><span>1</span><span>2</span></span><h2>Окончания глаголов и суффиксы причастий</h2></div>
+  <div class="box"><h3>Алгоритм для окончания глагола</h3>
+    <div class="rule"><b>Шаг 1.</b> Окончание ударное? Пиши как слышишь: <span class="ex">несЁшь, стоИшь</span>.</div>
+    <div class="rule"><b>Шаг 2.</b> Безударное? Поставь в инфинитив (сохрани вид и приставку по смыслу, но спряжение определяй по глаголу без приставки).</div>
+    <div class="rule"><b>II спряжение</b> (И, А/Я: -ишь, -ит, -им, -ите, -ат/-ят): все на <b>-ить</b>, кроме брить, стелить, зиждиться. Плюс 7 на -еть: смотреть, видеть, ненавидеть, зависеть, терпеть, обидеть, вертеть. Плюс 4 на -ать: гнать, держать, дышать, слышать.</div>
+    <div class="rule"><b>I спряжение</b> (Е, У/Ю: -ешь, -ет, -ем, -ете, -ут/-ют): все остальные, включая брить, стелить (<span class="ex">бреет, стелет</span>).</div>
+    <div class="rule"><b>Разноспрягаемые:</b> хотеть, бежать, чтить (<span class="ex">хотят, бегут, чтут</span>).</div>
+  </div>
+  <div class="box"><h3>Суффиксы причастий</h3>
+    <div class="tbl"><table><thead><tr><th>Причастие</th><th>I спряжение</th><th>II спряжение</th></tr></thead><tbody>
+      <tr><td>Действит., наст. вр.</td><td>-ущ-/-ющ-: <span class="ex">борющийся, тающий</span></td><td>-ащ-/-ящ-: <span class="ex">клеящий, строящий, дышащий</span></td></tr>
+      <tr><td>Страдат., наст. вр.</td><td>-ем-: <span class="ex">колеблемый</span></td><td>-им-: <span class="ex">видимый</span></td></tr>
+    </tbody></table></div>
+    <div class="rule"><b>-ВШ-:</b> перед ним та же гласная, что перед -ть: <span class="ex">увидеть → увидевший, посеять → посеявший</span>.</div>
+    <div class="rule"><b>Страдат. прошедшего времени:</b> от глаголов на -ать/-ять пишем -анн-/-янн- (<span class="ex">посеянный, выкачанный</span>). От глаголов на -ить/-еть/-ти/-чь пишем -енн-/-ённ- (<span class="ex">увиденный, обиженный, закреплённый</span>).</div>
+  </div>
+  <div class="trap"><b>Ловушки.</b> «Вы выпишИте» (просьба) и «вы выпишЕте» (будущее время) пишутся по-разному. Бороться, колоть, полоть относятся к I спряжению: <span class="ex">борются, колют</span>. Клеить и строить относятся ко II: <span class="ex">клеят, строят</span>. Таять, лаять относятся к I: <span class="ex">тают, лают</span>. Колыхать: <span class="ex">колышется</span>. Брезжить: <span class="ex">брезжит</span>.</div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>они бор..тся → <span class="ans">Ю</span> (бороться, I спр.)</li>
+    <li>кле..щий → <span class="ans">Я</span> (клеить, II спр.)</li>
+    <li>колебл..мый → <span class="ans">Е</span> (колебать, I спр.)</li>
+    <li>стел..т → <span class="ans">Е</span> (исключение)</li>
+    <li>увид..вший → <span class="ans">Е</span> (увидеть)</li>
+    <li>ненавид..шь → <span class="ans">И</span> (одно из 7 исключений на -еть)</li>
+  </ol></details>
+</section>
+
+<!-- 13 -->
+<section id="t13">
+  <div class="head"><span class="cells"><span>1</span><span>3</span></span><h2>НЕ с разными частями речи</h2></div>
+  <div class="tbl box"><table><thead><tr><th>Слитно</th><th>Раздельно</th></tr></thead><tbody>
+    <tr><td>Без НЕ слово не употребляется: <span class="ex">негодовать, ненавидя, небрежный, невежа</span></td><td>Глаголы и деепричастия: <span class="ex">не знал, не читая</span></td></tr>
+    <tr><td>Можно заменить синонимом без НЕ (сущ., прил., наречие на -о): <span class="ex">неправда = ложь, невысокий = низкий</span></td><td>Есть противопоставление с союзом «а»: <span class="ex">не высокий, а низкий</span></td></tr>
+    <tr><td>Полное причастие без зависимых слов: <span class="ex">непрочитанная книга</span></td><td>Полное причастие с зависимым словом: <span class="ex">не прочитанная мною книга</span></td></tr>
+    <tr><td>Приставка НЕДО- (меньше нормы): <span class="ex">недосыпать</span></td><td>Краткое причастие: <span class="ex">книга не прочитана</span></td></tr>
+    <tr><td>Отрицательные местоимения без предлога: <span class="ex">некого, нечего</span></td><td>С предлогом: <span class="ex">не у кого, не с чем</span></td></tr>
+    <tr><td>Со словами «очень, крайне, весьма»: <span class="ex">очень неинтересный</span></td><td>Со словами «далеко не, вовсе не, отнюдь не, ничуть не, нисколько не, ничем не»: <span class="ex">вовсе не интересный</span></td></tr>
+    <tr><td>Прилагательное с зависимым словом: <span class="ex">незнакомый мне человек</span></td><td>Сравнительная степень, числительные, местоимения: <span class="ex">не лучше, не пять, не мы, не такой</span></td></tr>
+  </tbody></table></div>
+  <div class="trap"><b>Ловушка.</b> Краткое прилагательное ведёт себя как полное: <span class="ex">задача несложна</span> (слитно). Краткое причастие всегда раздельно: <span class="ex">задача не решена</span>. Проверка: у причастия есть глагол (решить), у прилагательного нет (сложный).</div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>(не)прочитанная мною книга → <span class="ans">раздельно</span></li>
+    <li>(не)прочитанная книга → <span class="ans">слитно</span></li>
+    <li>далеко (не)простая задача → <span class="ans">раздельно</span></li>
+    <li>очень (не)простая задача → <span class="ans">слитно</span></li>
+    <li>(не)навидя → <span class="ans">слитно</span></li>
+    <li>задача (не)решена → <span class="ans">раздельно</span></li>
+  </ol></details>
+</section>
+
+<!-- 14 -->
+<section id="t14">
+  <div class="head"><span class="cells"><span>1</span><span>4</span></span><h2>Слитно, раздельно, через дефис</h2></div>
+  <div class="box"><h3>Производные предлоги и союзы</h3>
+    <div class="tbl"><table><thead><tr><th>Слитно</th><th>Раздельно</th></tr></thead><tbody>
+      <tr><td>ввиду (= из-за), вследствие, вместо, вроде, наподобие, насчёт, навстречу</td><td>в течение, в продолжение, в заключение (на конце Е), в связи, в виде, в отличие, по мере, во избежание</td></tr>
+      <tr><td>тоже, также (= и): <span class="ex">я тоже приду</span></td><td>то же, так же (= то же самое, так же как): <span class="ex">сделал так же, как ты</span></td></tr>
+      <tr><td>чтобы (цель): <span class="ex">пришёл, чтобы помочь</span></td><td>что бы (можно убрать «бы»): <span class="ex">что бы ты ни сказал</span></td></tr>
+      <tr><td>зато (= но), итак, причём, притом, оттого, поэтому</td><td>за то что, и так, при том (случае), от того (дома), по этому (пути)</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="box"><h3>Наречия</h3>
+    <div class="rule"><b>Дефис:</b> по- + -ому/-ему/-ски/-цки/-ьи (<span class="ex">по-новому, по-русски, по-лисьи</span>); в-/во- + -ых/-их (<span class="ex">во-первых</span>); кое-, -то, -либо, -нибудь (<span class="ex">где-то, кое-как</span>); повторы (<span class="ex">еле-еле, крест-накрест, точь-в-точь, волей-неволей</span>).</div>
+    <div class="rule"><b>Слитно:</b> предлог + прилагательное, наречие, числительное: <span class="ex">вплотную, вкрутую, издалека, вдвоём, надвое, втроём, вничью, врассыпную</span>.</div>
+    <div class="rule"><b>Раздельно:</b> предлог + существительное: <span class="ex">в обнимку, на бегу, с разбегу, до упаду, без устали, в меру, под мышкой, на ощупь, за границей, по одному</span>.</div>
+  </div>
+  <div class="box"><h3>Остальное</h3>
+    <div class="rule"><b>Частицы:</b> -то, -ка, -либо, -нибудь, -таки пишутся через дефис (<span class="ex">всё-таки, опять-таки</span>). бы, ли, же пишутся раздельно.</div>
+    <div class="rule"><b>ПОЛ-:</b> перед гласной, Л и заглавной пишем через дефис (<span class="ex">пол-апельсина, пол-лимона, пол-Москвы</span>). В остальных случаях слитно (<span class="ex">полдома</span>). ПОЛУ- всегда слитно.</div>
+    <div class="rule"><b>Сложные прилагательные:</b> части равноправны, пишем через дефис (<span class="ex">русско-английский, светло-синий</span>). Одна часть подчинена другой, пишем слитно (<span class="ex">железнодорожный</span>). Наречие + прилагательное пишутся раздельно (<span class="ex">жизненно важный</span>).</div>
+  </div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>(в)течение часа → <span class="ans">раздельно, в течение</span></li>
+    <li>(в)виду опасности → <span class="ans">слитно</span> (= из-за)</li>
+    <li>(по)русски → <span class="ans">через дефис</span></li>
+    <li>(пол)апельсина → <span class="ans">через дефис</span></li>
+    <li>я (то)же приду → <span class="ans">слитно</span></li>
+    <li>(в)обнимку → <span class="ans">раздельно</span></li>
+  </ol></details>
+</section>
+
+<!-- 15 -->
+<section id="t15">
+  <div class="head"><span class="cells"><span>1</span><span>5</span></span><h2>Н и НН</h2></div>
+  <div class="box"><h3>Прилагательные от существительных</h3>
+    <div class="rule"><b>Одна Н:</b> суффиксы -ан-, -ян-, -ин-: <span class="ex">кожаный, серебряный, лебединый</span>. Исключения с НН: стеклянный, оловянный, деревянный.</div>
+    <div class="rule"><b>НН:</b> суффиксы -онн-, -енн-: <span class="ex">революционный, клюквенный</span>. Исключение: ветреный (но безветренный). Корень на Н + суффикс -н-: <span class="ex">туманный, сонный, длинный</span>.</div>
+    <div class="rule"><b>Одна Н без суффикса:</b> юный, зелёный, румяный, пряный, пьяный, свиной, багряный.</div>
+  </div>
+  <div class="box"><h3>Причастия и отглагольные прилагательные</h3>
+    <div class="rule"><b>НН, если есть хотя бы один признак:</b> приставка (кроме не-): <span class="ex">прочитанный</span>; зависимое слово: <span class="ex">жаренная на масле</span>; суффикс -ова-/-ева-: <span class="ex">маринованный</span>; совершенный вид: <span class="ex">брошенный, решённый</span>.</div>
+    <div class="rule"><b>Одна Н:</b> нет ни одного признака: <span class="ex">жареный, варёный, кошеный, некошеный</span> (не- не считается приставкой). Кованый, жёваный пишутся с одной Н, потому что -ов-/-ев- тут часть корня.</div>
+    <div class="rule"><b>Исключения с НН:</b> невиданный, неслыханный, нечаянный, негаданный, нежданный, желанный, жеманный, медленный, чванный, священный, чеканный, деланный.</div>
+    <div class="rule"><b>Исключения с Н:</b> смышлёный, названый (брат), посажёный (отец), конченый (человек), приданое.</div>
+  </div>
+  <div class="box"><h3>Краткие формы, наречия, существительные</h3>
+    <div class="rule"><b>Краткое причастие:</b> всегда одна Н: <span class="ex">ребёнок воспитан бабушкой</span>.</div>
+    <div class="rule"><b>Краткое прилагательное:</b> столько Н, сколько в полной форме: <span class="ex">девушка воспитанна (= воспитанная), речи ответственны</span>.</div>
+    <div class="rule"><b>Наречия на -о и существительные:</b> столько Н, сколько в слове, от которого образованы: <span class="ex">неожиданно (неожиданный), ветреность (ветреный), воспитанник (воспитанный)</span>.</div>
+  </div>
+  <div class="trap"><b>Ловушка.</b> Масленый (от глагола «масленить»: масленые руки) и масляный (от «масло»: масляная краска). Раненый боец, но раненный в бою боец.</div>
+  <details class="q"><summary>Проверь себя</summary><ol>
+    <li>деревя..ый → <span class="ans">НН</span> (исключение)</li>
+    <li>жаре..ая картошка → <span class="ans">Н</span></li>
+    <li>жаре..ая на масле картошка → <span class="ans">НН</span></li>
+    <li>ветре..ый → <span class="ans">Н</span></li>
+    <li>девушка воспита..а и умна → <span class="ans">НН</span> (прилагательное)</li>
+    <li>кова..ый → <span class="ans">Н</span></li>
+  </ol></details>
+</section>
+
+<!-- TRAINER -->
+<section id="train">
+  <div class="head"><span class="cells"><span>✓</span></span><h2>Тренажёр ударений</h2></div>
+  <p class="what">20 случайных слов из списка выше. Выбери вариант с верным ударением. В конце покажу слова, на которых ты ошибся.</p>
+  <div class="trainer" id="trainer" aria-live="polite">
+    <div class="prog" id="prog"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div id="endBox" hidden></div>
+    <div><button class="btn" id="restart" type="button">Начать заново</button></div>
+  </div>
+</section>
+
+<footer>
+  <p>Где тренироваться: <a href="https://rus-ege.sdamgia.ru/" target="_blank" rel="noopener">«Решу ЕГЭ»</a>, раздел «Каталог заданий», там можно решать по номеру задания. Официальные задания: <a href="https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege" target="_blank" rel="noopener">открытый банк ФИПИ</a>.</p>
+  <p>Правила соответствуют кодификатору ЕГЭ 2026: в заданиях 4, 9–15 изменений по сравнению с 2025 годом нет.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  var UP=/[А-ЯЁ]/;
+  function render(w){
+    var i=w.search(UP); if(i<0) return w;
+    return w.slice(0,i)+'<b class="acc">'+w[i].toLowerCase()+'</b>'+w.slice(i+1);
+  }
+  var all=[];
+  document.querySelectorAll('[data-words]').forEach(function(el){
+    var ws=el.getAttribute('data-words').split(/\s+/).filter(Boolean);
+    el.innerHTML=ws.map(function(w){return '<span>'+render(w)+'</span>';}).join('');
+    all=all.concat(ws);
+  });
+
+  // plan checkboxes
+  var KEY='ege-plan-v1', saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  document.querySelectorAll('#planList input').forEach(function(cb){
+    if(saved[cb.id]) cb.checked=true;
+    cb.addEventListener('change',function(){
+      saved[cb.id]=cb.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+    });
+  });
+
+  // trainer
+  var V='аеиоуыэюя';
+  var pool=all.filter(function(w){return w.indexOf('Ё')<0 && w.indexOf('ё')<0;});
+  function wrongOf(w){
+    var low=w.toLowerCase(), right=w.search(UP), idx=[];
+    for(var i=0;i<low.length;i++){ if(V.indexOf(low[i])>=0 && i!==right) idx.push(i); }
+    if(!idx.length) return null;
+    var j=idx[Math.floor(Math.random()*idx.length)];
+    return low.slice(0,j)+low[j].toUpperCase()+low.slice(j+1);
+  }
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  var qs,n,score,miss,locked;
+  var prog=document.getElementById('prog'),opts=document.getElementById('opts'),fb=document.getElementById('fb'),endBox=document.getElementById('endBox');
+  function start(){
+    qs=shuffle(pool.slice()).filter(function(w){return wrongOf(w);}).slice(0,20);
+    n=0;score=0;miss=[];endBox.hidden=true;opts.hidden=false;show();
+  }
+  function show(){
+    if(n>=qs.length){return finish();}
+    locked=false;fb.textContent='';fb.className='fb';
+    prog.textContent='Слово '+(n+1)+' из '+qs.length+' · верно: '+score;
+    var w=qs[n], pair=shuffle([{w:w,ok:true},{w:wrongOf(w),ok:false}]);
+    opts.innerHTML='';
+    pair.forEach(function(p){
+      var b=document.createElement('button');b.type='button';b.innerHTML=render(p.w);
+      b.addEventListener('click',function(){
+        if(locked) return; locked=true;
+        if(p.ok){score++;b.classList.add('ok');fb.textContent='Верно';fb.className='fb ok';}
+        else{miss.push(w);b.classList.add('bad');fb.innerHTML='Нет, правильно: '+render(w);fb.className='fb bad';
+          opts.querySelectorAll('button').forEach(function(x){if(x!==b) x.classList.add('ok');});}
+        setTimeout(function(){n++;show();},p.ok?650:1500);
+      });
+      opts.appendChild(b);
+    });
+  }
+  function finish(){
+    opts.hidden=true;fb.textContent='';
+    prog.textContent='Готово: '+score+' из '+qs.length;
+    endBox.hidden=false;
+    endBox.innerHTML=miss.length?('<p><b>Повтори эти слова:</b></p><div class="words">'+miss.map(function(w){return '<span>'+render(w)+'</span>';}).join('')+'</div>'):'<p><b>Без ошибок.</b> Пройди ещё раз, слова каждый раз новые.</p>';
+  }
+  document.getElementById('restart').addEventListener('click',start);
+  start();
+})();
+</script>
