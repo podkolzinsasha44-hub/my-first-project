@@ -65,7 +65,10 @@ select,input[type=text],input[type=time]{font:inherit;color:var(--text);backgrou
 .fields input.link{width:min(260px,100%);font-family:var(--ff-body)}
 .est{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--muted)}
 .est.exact{color:var(--ok)}
-.fields a{color:var(--accent);font-weight:600}
+.fields a{color:var(--accent);font-weight:600;text-decoration:none}
+.fields a:hover{text-decoration:underline}
+.fields a.alt{color:var(--muted);font-weight:500}
+.rownote{font-size:13px;color:var(--text);background:var(--surface-2);border-radius:6px;padding:6px 9px;max-width:65ch}
 .dur{font:500 13px var(--ff-mono);color:var(--text)}
 .check{width:22px;height:22px;accent-color:var(--accent);cursor:pointer;margin-top:2px}
 .break{display:flex;gap:12px;align-items:center;color:var(--faint);font-size:13px;padding:2px 14px}
@@ -83,7 +86,7 @@ select,input[type=text],input[type=time]{font:inherit;color:var(--text);backgrou
 <div class="wrap">
   <header>
     <h1>Закрываю долги: 26–27 сентября</h1>
-    <p class="lead">Всё видео смотрится на выбранной скорости, тесты и письменные работы идут без ускорения. Длительности пока примерные. Вставь реальное время ролика с NooTube и ссылку, и расписание пересчитается само.</p>
+    <p class="lead">Видео смотрится на выбранной скорости, тесты и письменные работы идут без ускорения. Длительность роликов взята со страниц материалов на НОО.Платформе. Метка «оценка» стоит там, где записи пока нет. Любое время можно поправить, и расписание пересчитается.</p>
   </header>
 
   <div class="controls">
@@ -99,46 +102,49 @@ select,input[type=text],input[type=time]{font:inherit;color:var(--text);backgrou
   <div class="summary" id="summary"></div>
   <section class="day" id="day-sat"></section>
   <section class="day" id="day-sun"></section>
-  <p class="note">«оценка» значит, что время взято примерно по типу занятия: теория около часа, практика и вебинар около двух часов, разбор произведения около 1:40. Как только впишешь своё время, метка станет «точно». Отметки и ссылки сохраняются в этом браузере.</p>
+  <p class="note">Время тестов примерное: 15–20 минут. Пробник по биологии рассчитан на 3 ч 55 мин, как на ЕГЭ. Отметки «готово» и твои правки сохраняются в этом браузере.</p>
 </div>
 
 <script>
 // kind: video (ускоряется) | test | written | exam (без ускорения)
+const R="https://noo-school.ru/courses/01KYWP8X4SWBTAW1SCZ95ZVQWJ-godovoi-kurs-ege-2027-ili-nikita-kolganov/", H="https://noo-school.ru/courses/01KYW52WC6G3Q6YR6AHK2A504P-godovoi-kurs-ege-2027-ili-dmitrii-petrov/", B="https://noo-school.ru/courses/01KYS7TWR36YFMKBYE37D4M70T-godovoi-kurs-ege-2027-ili-sergei-kondratenko/", NT="https://noo-school.ru/nootube/video/";
+// kind: video (ускоряется) | test | written | exam (без ускорения). exact: длительность взята со страницы материала
 const TASKS = [
-  // ── Суббота, 26.09 ──
-  {id:"h-p12",  day:"sat", subj:"ХИМ", kind:"video", type:"Практика", title:"Практика №12", topic:"Основы ОВР. Электронный баланс", len:"2:00", flag:"долг с 25.09"},
-  {id:"h-p12t", day:"sat", subj:"ХИМ", kind:"test",  type:"Тест", title:"Тест: Практика №12", topic:"Основы ОВР. Электронный баланс", len:"0:20", flag:"сдать до 26.09, 23:59", urgent:true, attach:true},
-  {id:"r-a6",   day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №6", topic:"«Судьба человека»", len:"1:40", exact:true, flag:"долг с 20.09"},
-  {id:"r-a6t",  day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №6", topic:"«Судьба человека»", len:"0:15", flag:"просрочен с 08.09", attach:true},
-  {id:"r-a7",   day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №7", topic:"«Портрет Дориана Грея»", len:"1:40", flag:"долг с 20.09"},
-  {id:"r-a7t",  day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №7", topic:"«Портрет Дориана Грея»", len:"0:15", flag:"просрочен с 13.09", attach:true},
-  {id:"r-a8",   day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №8", topic:"«Пиковая дама»", len:"1:30", flag:"долг с 20.09"},
-  {id:"r-a8t",  day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №8", topic:"«Пиковая дама»", len:"0:15", flag:"просрочен с 15.09", attach:true},
-  {id:"r-t12",  day:"sat", subj:"РУС", kind:"video", type:"Теория", title:"Теория №12", topic:"4 задание", len:"1:00", flag:"долг с 23.09"},
+  // ── Суббота, 26.09: сначала химия (тест в календаре до 23:59), потом хвосты с прошлого воскресенья ──
+  {id:"h-p12", day:"sat", subj:"ХИМ", kind:"video", type:"Практика", title:"Практика №12", topic:"Основы ОВР. Электронный баланс", len:"2:40:27", exact:true, flag:"долг с 25.09", nt:NT+"01M3CMQTXF3GBK4AH2RMG87W7C", yt:"https://youtu.be/5wroDToLpFI", page:H+"1b18e881-323f-4503-85fb-657cf1f0f5f3"},
+  {id:"h-p12t",day:"sat", subj:"ХИМ", kind:"test",  type:"Тест", title:"Тест: Практика №12", topic:"Основы ОВР. Электронный баланс", len:"0:20", flag:"в календаре до 26.09, в материале до 28.09", soon:true, attach:true, page:H+"4bfcaa13-8285-434f-a4de-d59adf9dbc92"},
+  {id:"r-a6",  day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №6", topic:"«Судьба человека»", len:"1:40:23", exact:true, flag:"долг с 20.09", nt:NT+"01M1MEH9162MY1NRZD52V7VYCV", yt:"https://youtu.be/TO4wpRjUOD0", page:R+"e2f0e58c-f0fb-431e-bd40-b9cbaed8c067"},
+  {id:"r-a6t", day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №6", topic:"«Судьба человека»", len:"0:15", flag:"просрочен с 08.09", attach:true, page:R+"e2f0e58c-f0fb-431e-bd40-b9cbaed8c067"},
+  {id:"r-a7",  day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №7", topic:"«Портрет Дориана Грея»", len:"1:26:15", exact:true, flag:"долг с 20.09", nt:NT+"01K9QMTHYBPG5QGCM08C91E67Z", yt:"https://youtu.be/8Q1k6kSzX80", page:R+"81923c35-2aaa-4dff-a955-b3dcb1fd8c09"},
+  {id:"r-a7t", day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №7", topic:"«Портрет Дориана Грея»", len:"0:15", flag:"просрочен с 13.09", attach:true, page:R+"81923c35-2aaa-4dff-a955-b3dcb1fd8c09"},
+  {id:"r-a8",  day:"sat", subj:"РУС", kind:"video", type:"Разбор", title:"Разбор произведения №8", topic:"«Пиковая дама»", len:"0:34:23", exact:true, flag:"долг с 20.09", nt:NT+"01K7WD87M6P0EGBSFYP7ZRC8ZS", yt:"https://youtu.be/5VmSMQaUlFE", page:R+"be64ad33-d165-4bac-ad4d-5ce92935a787"},
+  {id:"r-a8t", day:"sat", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Разбор произведения №8", topic:"«Пиковая дама»", len:"0:15", flag:"просрочен с 15.09", attach:true, page:R+"be64ad33-d165-4bac-ad4d-5ce92935a787"},
+  {id:"r-t12", day:"sat", subj:"РУС", kind:"video", type:"Теория", title:"Теория №12", topic:"4 задание", len:"0:41:41", exact:true, flag:"долг с 23.09", nt:NT+"01M32NS7KQ2TFHV378R6J4YX3G", yt:"https://youtu.be/rTwTYFcGKcY", page:R+"56b163fa-26f3-402f-ba07-0f22daca53b1"},
   // ── Воскресенье, 27.09: сначала долги ──
-  {id:"h-p11",  day:"sun", subj:"ХИМ", kind:"video", type:"Практика", title:"Практика №11", topic:"Формулы в химии. Расчёты по уравнению реакции", len:"2:00", flag:"долг с 23.09"},
-  {id:"b-p112", day:"sun", subj:"БИО", kind:"video", type:"Практика", title:"Практика №11.2", topic:"Решение задач на биосинтез белка №2", len:"2:00", flag:"долг с 24.09"},
-  {id:"r-t13",  day:"sun", subj:"РУС", kind:"video", type:"Теория", title:"Теория №13", topic:"5 задание", len:"1:00", flag:"долг с 25.09"},
-  {id:"r-t13t", day:"sun", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Теория №13", topic:"5 задание", len:"0:15", flag:"до 28.09", soon:true, attach:true},
-  {id:"r-p7",   day:"sun", subj:"РУС", kind:"video", type:"Практика", title:"Практика №7", topic:"К1–К3 на максимум. Разбор работ, веб с экспертом ЕГЭ", len:"2:00", flag:"с 26.09"},
+  {id:"h-p11", day:"sun", subj:"ХИМ", kind:"video", type:"Практика", title:"Практика №11", topic:"Формулы. Простейшие задачи", len:"1:59:05", exact:true, flag:"долг с 23.09", nt:NT+"01M37QDNQJ4QHXP0M95GMMBW78", yt:"https://youtu.be/5rM40Kpk4wc", page:H+"2c10fb80-53d5-48ff-88c4-20b193f8e010"},
+  {id:"b-p112",day:"sun", subj:"БИО", kind:"video", type:"Практика", title:"Практика №11.2", topic:"Решение задач на биосинтез белка №2. Выпиши кодовую фразу", len:"2:00", flag:"долг с 24.09", nt:NT+"01M3A1JKKD9VZ14493JZPG81DJ", yt:"https://youtu.be/omwRayOc1CI", page:B+"547d2708-f9c2-4f22-9051-2d6bf9715821", note:"Длину плеер не показал, стоит оценка. Кодовую фразу и ДЗ второй части надо сдать до 27.09, 23:59."},
+  {id:"r-t13", day:"sun", subj:"РУС", kind:"video", type:"Теория", title:"Теория №13", topic:"5 задание", len:"1:22:41", exact:true, flag:"долг с 25.09", nt:NT+"01M37XWYFSNKBP8KEPWYENSE03", yt:"https://youtu.be/cC108IXJ_gg", page:R+"32912897-4526-4248-bb04-3eb246b267df"},
+  {id:"r-t13t",day:"sun", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Теория №13", topic:"5 задание", len:"0:15", flag:"до 28.09", soon:true, attach:true, page:R+"32912897-4526-4248-bb04-3eb246b267df"},
   // ── Воскресенье: план дня ──
-  {id:"h-t13",  day:"sun", subj:"ХИМ", kind:"video", type:"Теория", title:"Теория №13", topic:"Химические свойства оксидов: основных и кислотных", len:"1:00"},
-  {id:"h-t14",  day:"sun", subj:"ХИМ", kind:"video", type:"Теория", title:"Теория №14", topic:"Химические свойства оснований", len:"1:00"},
-  {id:"h-club", day:"sun", subj:"ХИМ", kind:"video", type:"Вебинар", title:"Клуб укротителей задач №3", topic:"Задача 26. Молярные концентрации", len:"1:30"},
-  {id:"r-t14",  day:"sun", subj:"РУС", kind:"video", type:"Теория", title:"Теория №14", topic:"6 задание", len:"1:00"},
-  {id:"r-t14t", day:"sun", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Теория №14", topic:"6 задание", len:"0:15", flag:"до 30.09", soon:true, attach:true},
-  // ── Не долги: сроки позже, делать по силам ──
-  {id:"b-mock", day:"opt", subj:"БИО", kind:"exam",    type:"Пробник", title:"Пробник №3", topic:"Биология", len:"3:00", flag:"до 29.09", soon:true},
-  {id:"h-d13",  day:"opt", subj:"ХИМ", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Теория №13", topic:"Химические свойства оксидов", len:"0:30", flag:"до 03.10", soon:true},
-  {id:"h-d14",  day:"opt", subj:"ХИМ", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Теория №14", topic:"Химические свойства оснований", len:"0:30", flag:"до 03.10", soon:true},
-  {id:"r-d7",   day:"opt", subj:"РУС", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Практика №7", topic:"К1–К3 на максимум", len:"0:40", flag:"до 03.10", soon:true},
+  {id:"h-t13", day:"sun", subj:"ХИМ", kind:"video", type:"Теория", title:"Теория №13", topic:"Химические свойства оксидов", len:"1:08:04", exact:true, nt:NT+"01K63X3M11AXTYM4HP2EFYSNR9", yt:"https://youtu.be/AhV1uob0lM0", page:H+"8f5f7a33-ae4b-46fe-836c-0ce17b2d0443"},
+  {id:"h-t14", day:"sun", subj:"ХИМ", kind:"video", type:"Теория", title:"Теория №14", topic:"Химические свойства оснований", len:"1:03:46", exact:true, nt:NT+"01K6469ZG26FK3JS2RTK8AME3Z", yt:"https://youtu.be/TSwe3c_l-Ag", page:H+"33d1a33e-8ac2-45aa-87c4-afbdf75e7b7c"},
+  {id:"r-t14", day:"sun", subj:"РУС", kind:"video", type:"Теория", title:"Теория №14", topic:"6 задание", len:"0:43:13", exact:true, nt:NT+"01M3CWJ13X304QCXGVMVKC2RXK", yt:"https://youtu.be/xggOnF028fY", page:R+"8cd5cc0c-ef07-48a1-9e1e-5d5e79842a97"},
+  {id:"r-t14t",day:"sun", subj:"РУС", kind:"test",  type:"Тест", title:"Тест: Теория №14", topic:"6 задание", len:"0:15", flag:"до 30.09", soon:true, attach:true, page:R+"8cd5cc0c-ef07-48a1-9e1e-5d5e79842a97"},
+  {id:"h-club",day:"sun", subj:"ХИМ", kind:"video", type:"Вебинар", title:"Клуб укротителей задач №3", topic:"Задача 26. Молярная концентрация", len:"2:50", flag:"эфир 27.09 в 11:00 МСК", soon:true, page:H+"69ff05a7-0d83-419b-a744-e6dd12f31d84", note:"Запись появится через несколько часов после эфира, поэтому стоит ближе к вечеру. Оценка по клубу №2, он шёл 2:49. Распечатай рабочую тетрадь из материала."},
+  {id:"r-p7",  day:"sun", subj:"РУС", kind:"video", type:"Практика", title:"Практика №7 (с экспертом)", topic:"Разбор критериев К1–К3 сочинения ЕГЭ", len:"2:00", flag:"вебинар 26.09 в Zoom", soon:true, page:R+"ab73b744-7ebd-490d-b4c5-d10fbec4d308", note:"Записи на странице пока нет. Когда выложат, впиши длительность."},
+  // ── Не долги: сроки позже ──
+  {id:"b-mock",day:"opt", subj:"БИО", kind:"exam",    type:"Пробник", title:"Пробник №3", topic:"Биология", len:"3:55", flag:"до 30.09", soon:true, page:B+"e3af6755-68a5-4efe-8b21-08c9a09e3337"},
+  {id:"h-d13", day:"opt", subj:"ХИМ", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Теория №13", topic:"Химические свойства оксидов", len:"0:30", flag:"до 03.10", soon:true, page:H+"b6db4ec9-9637-4f4d-9042-b83c36101f71"},
+  {id:"h-d14", day:"opt", subj:"ХИМ", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Теория №14", topic:"Химические свойства оснований", len:"0:30", flag:"до 03.10", soon:true, page:H+"b75e503a-e918-4fd1-9e41-109d57936208"},
+  {id:"r-d7",  day:"opt", subj:"РУС", kind:"written", type:"ДЗ", title:"Письменное ДЗ: Практика №7", topic:"К1–К3 на максимум", len:"0:40", flag:"до 03.10", soon:true},
 ];
 const DAYS = {
   sat:{name:"Суббота, 26 сентября", note:"сегодня вечером", start:"19:30"},
   sun:{name:"Воскресенье, 27 сентября", note:"сначала долги, потом план дня", start:"10:00"},
 };
-const KEY="noo-weekend-v1";
+const KEY="noo-weekend-v2";
 let S={};
+
 try{S=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){S={}}
 S.t=S.t||{}; S.start=S.start||{};
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
@@ -165,13 +171,14 @@ function rowHTML(t,startMin){const s=st(t);const vid=t.kind==="video";
     <div class="body">
       <div class="tags"><span class="chip ${t.subj}">${t.subj}</span><span class="kind">${esc(t.type)}</span>${t.flag?`<span class="flag${t.soon?" soon":""}">${esc(t.flag)}</span>`:""}</div>
       <div class="title">${esc(t.title)}</div>
-      <div class="topic">${esc(t.topic)}</div>
+      <div class="topic">${esc(t.topic)}</div>${t.note?`<div class="rownote">${esc(t.note)}</div>`:""}
       <div class="fields">
-        <label for="len-${t.id}">${vid?"Ролик":"Время"} <input type="text" id="len-${t.id}" data-id="${t.id}" data-f="len" value="${esc(s.raw)}" inputmode="numeric" aria-label="Длительность, ч:мм"></label>
+        <label for="len-${t.id}">${vid?"Ролик":"Время"} <input type="text" id="len-${t.id}" data-id="${t.id}" data-f="len" value="${esc(s.raw)}" inputmode="numeric" aria-label="Длительность, ч:мм или ч:мм:сс"></label>
         <span class="est${s.exact?" exact":""}">${s.exact?"точно":"оценка"}</span>
-        ${vid?`<span>на ${speedEl.value}× → <span class="dur">${hm(s.eff)}</span></span>
-        <label for="link-${t.id}" style="display:flex;gap:6px;align-items:center">NooTube <input type="text" class="link" id="link-${t.id}" data-id="${t.id}" data-f="link" value="${esc(s.link)}" placeholder="вставь ссылку"></label>
-        ${/^https?:\/\//.test(s.link)?`<a href="${esc(s.link)}" target="_blank" rel="noopener">открыть ↗</a>`:""}`:""}
+        ${vid?`<span>на ${speedEl.value}× → <span class="dur">${hm(s.eff)}</span></span>`:""}
+        ${t.nt?`<a href="${t.nt}" target="_blank" rel="noopener">NooTube ↗</a>`:""}
+        ${t.yt?`<a class="alt" href="${t.yt}" target="_blank" rel="noopener">YouTube ↗</a>`:""}
+        ${t.page?`<a class="alt" href="${t.page}" target="_blank" rel="noopener">${t.kind==="test"||t.kind==="exam"?"К работе ↗":"Материал ↗"}</a>`:""}
       </div>
     </div>
     <input type="checkbox" class="check" id="done-${t.id}" data-id="${t.id}" data-f="done" ${s.done?"checked":""} aria-label="Готово: ${esc(t.title)}">
